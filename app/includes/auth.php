@@ -1,37 +1,51 @@
 
 <?php
 
-declare(strict_types=1);
+
+require_once __DIR__ . '/functions.php';
 
 /**
- * Generate or retrieve CSRF token.
+ * Check whether a user is logged in.
  */
-function generateCsrfToken(): string
+function requireLogin(): void
 {
-    if (empty($_SESSION['csrf_token'])) {
+    if (!isset($_SESSION['user_id'])) {
 
-        $_SESSION['csrf_token'] = bin2hex(
-            random_bytes(32)
+        setFlashMessage(
+            'danger',
+            'Please log in to access your account.'
+        );
+
+        redirect(
+            '/customer-loyalty-rewards/public/customer/login.php'
         );
     }
-
-    return $_SESSION['csrf_token'];
 }
 
 /**
- * Validate submitted CSRF token.
+ * Allow access only to customers.
  */
-function verifyCsrfToken(?string $token): bool
+function requireCustomer(): void
 {
-    if (
-        !isset($_SESSION['csrf_token']) ||
-        !is_string($token)
-    ) {
-        return false;
-    }
+    requireLogin();
 
-    return hash_equals(
-        $_SESSION['csrf_token'],
-        $token
-    );
+    if (($_SESSION['user_role'] ?? '') !== 'customer') {
+
+        http_response_code(403);
+        exit('Access denied. Customer access only.');
+    }
+}
+
+/**
+ * Allow access only to administrators.
+ */
+function requireAdmin(): void
+{
+    requireLogin();
+
+    if (($_SESSION['user_role'] ?? '') !== 'admin') {
+
+        http_response_code(403);
+        exit('Access denied. Administrator access only.');
+    }
 }
