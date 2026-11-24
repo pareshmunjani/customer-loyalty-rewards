@@ -9,7 +9,6 @@ require_once __DIR__ . '/../../app/includes/auth.php';
 require_once __DIR__ . '/../../app/includes/csrf.php';
 require_once __DIR__ . '/../../app/config/database.php';
 
-// Protect the dashboard
 requireCustomer();
 
 $pageTitle = 'My Dashboard | Loyalty Rewards';
@@ -152,7 +151,6 @@ require_once __DIR__ . '/../../app/includes/header.php';
 <div class="container py-5">
 
     <!-- Dashboard Heading -->
-
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
 
         <div>
@@ -188,9 +186,72 @@ require_once __DIR__ . '/../../app/includes/header.php';
 
     </div>
 
+    <!-- Customer Quick Actions -->
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body p-4">
+
+            <h4 class="fw-bold mb-3">
+                Quick Actions
+            </h4>
+
+            <p class="text-muted mb-4">
+                Access your loyalty rewards features.
+            </p>
+
+            <div class="row g-3">
+
+                <div class="col-md-6 col-lg-3">
+
+                    <a
+                        href="redeem-code.php"
+                        class="btn btn-primary w-100 py-3"
+                    >
+                        Redeem Code
+                    </a>
+
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+
+                    <a
+                        href="points-history.php"
+                        class="btn btn-outline-primary w-100 py-3"
+                    >
+                        Points History
+                    </a>
+
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+
+                    <a
+                        href="rewards.php"
+                        class="btn btn-outline-primary w-100 py-3"
+                    >
+                        Browse Rewards
+                    </a>
+
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+
+                    <a
+                        href="redemption-history.php"
+                        class="btn btn-outline-primary w-100 py-3"
+                    >
+                        Redemption History
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
     <!-- Points Summary Cards -->
-
     <div class="row g-4 mb-5">
 
         <div class="col-md-6 col-xl-3">
@@ -213,7 +274,6 @@ require_once __DIR__ . '/../../app/includes/header.php';
 
         </div>
 
-
         <div class="col-md-6 col-xl-3">
 
             <div class="card border-0 shadow-sm h-100">
@@ -234,7 +294,6 @@ require_once __DIR__ . '/../../app/includes/header.php';
 
         </div>
 
-
         <div class="col-md-6 col-xl-3">
 
             <div class="card border-0 shadow-sm h-100">
@@ -254,7 +313,6 @@ require_once __DIR__ . '/../../app/includes/header.php';
             </div>
 
         </div>
-
 
         <div class="col-md-6 col-xl-3">
 
@@ -278,16 +336,25 @@ require_once __DIR__ . '/../../app/includes/header.php';
 
     </div>
 
-
     <!-- Recent Transactions -->
-
     <div class="card border-0 shadow-sm mb-5">
 
         <div class="card-body p-4">
 
-            <h4 class="fw-bold mb-4">
-                Recent Transactions
-            </h4>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h4 class="fw-bold mb-0">
+                    Recent Transactions
+                </h4>
+
+                <a
+                    href="points-history.php"
+                    class="text-decoration-none"
+                >
+                    View All
+                </a>
+
+            </div>
 
             <?php if (empty($recentTransactions)): ?>
 
@@ -322,6 +389,7 @@ require_once __DIR__ . '/../../app/includes/header.php';
                                 <tr>
 
                                     <td>
+
                                         <?php if ($transaction['transaction_type'] === 'earn'): ?>
 
                                             <span class="badge bg-success">
@@ -335,6 +403,7 @@ require_once __DIR__ . '/../../app/includes/header.php';
                                             </span>
 
                                         <?php endif; ?>
+
                                     </td>
 
                                     <td>
@@ -392,16 +461,25 @@ require_once __DIR__ . '/../../app/includes/header.php';
 
     </div>
 
-
     <!-- Available Rewards -->
-
     <div class="card border-0 shadow-sm">
 
         <div class="card-body p-4">
 
-            <h4 class="fw-bold mb-4">
-                Available Rewards
-            </h4>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h4 class="fw-bold mb-0">
+                    Available Rewards
+                </h4>
+
+                <a
+                    href="rewards.php"
+                    class="text-decoration-none"
+                >
+                    View All
+                </a>
+
+            </div>
 
             <?php if (empty($availableRewards)): ?>
 
