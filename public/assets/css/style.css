@@ -478,3 +478,627 @@ a:hover {
         font-size: 1.7rem;
     }
 }
+
+/* ==========================================
+   MODERN WEBSITE NAVIGATION
+========================================== */
+
+.site-navbar {
+    min-height: 82px;
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom: 1px solid #e8edf5;
+    box-shadow: 0 4px 20px rgba(30, 41, 59, 0.035);
+    position: relative;
+    z-index: 100;
+}
+
+.site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    color: #253b80 !important;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.6px;
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #253b80, #4169e1);
+    color: #ffffff;
+    font-size: 1.4rem;
+    box-shadow: 0 5px 12px rgba(37, 59, 128, 0.2);
+}
+
+.brand-highlight {
+    color: #4169e1;
+}
+
+.site-brand small {
+    display: block;
+    margin-top: 5px;
+    color: #94a3b8;
+    font-size: 0.57rem;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+}
+
+.site-navbar .navbar-nav {
+    padding: 8px 0;
+}
+
+.site-navbar .nav-link {
+    padding: 10px 17px !important;
+    border-radius: 9px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.site-navbar .nav-login {
+    color: #334155;
+}
+
+.site-navbar .nav-login:hover {
+    color: #253b80;
+    background: #f1f5ff;
+}
+
+.site-navbar .nav-register {
+    color: #ffffff;
+    background: #253b80;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.site-navbar .nav-register:hover {
+    color: #ffffff;
+    background: #1b2e68;
+    transform: translateY(-1px);
+}
+
+.site-navbar .nav-admin {
+    color: #4169e1;
+    border: 1px solid #dce5fb;
+}
+
+.site-navbar .nav-admin:hover {
+    background: #f1f5ff;
+    border-color: #4169e1;
+}
+
+.site-navbar .nav-dashboard {
+    color: #ffffff;
+    background: #253b80;
+}
+
+.site-navbar .nav-dashboard:hover {
+    color: #ffffff;
+    background: #1b2e68;
+}
+
+.site-navbar .navbar-toggler {
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 7px 10px;
+}
+
+.site-navbar .navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.15);
+}
+
+/* Mobile navigation */
+
+@media (max-width: 991px) {
+
+    .site-navbar {
+        min-height: 72px;
+    }
+
+    .site-navbar .navbar-collapse {
+        padding: 14px 0 18px;
+    }
+
+    .site-navbar .navbar-nav {
+        align-items: stretch !important;
+        gap: 7px !important;
+    }
+
+    .site-navbar .nav-link {
+        padding: 12px 15px !important;
+    }
+
+    .site-navbar .nav-register {
+        text-align: center;
+    }
+}
+
+/* ==========================================
+   PREMIUM HOMEPAGE DESIGN
+========================================== */
+
+.landing-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 100px 0 110px;
+    background:
+        radial-gradient(circle at 85% 15%, #e2eaff 0, transparent 30%),
+        linear-gradient(135deg, #f7f9ff, #edf2ff);
+}
+
+.hero-eyebrow,
+.section-eyebrow {
+    display: inline-block;
+    color: #4169e1;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.landing-title {
+    max-width: 650px;
+    color: #172b61;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 1.12;
+    margin-bottom: 25px;
+}
+
+.landing-title span,
+.benefits-title span {
+    display: block;
+    color: #4169e1;
+}
+
+.landing-description {
+    max-width: 580px;
+    color: #64748b;
+    font-size: 1.08rem;
+    line-height: 1.9;
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+}
+
+.hero-primary-button,
+.hero-secondary-button,
+.rewards-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 53px;
+    padding: 0 24px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.hero-primary-button {
+    color: white;
+    background: #253b80;
+    box-shadow: 0 8px 20px rgba(37, 59, 128, 0.2);
+}
+
+.hero-primary-button:hover {
+    color: white;
+    background: #172b61;
+    transform: translateY(-3px);
+}
+
+.hero-secondary-button {
+    color: #253b80;
+    background: white;
+    border: 1px solid #dce5fb;
+}
+
+.hero-secondary-button:hover {
+    color: #253b80;
+    background: #f1f5ff;
+}
+
+.hero-note {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-top: 28px;
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+.hero-note span {
+    color: #15966b;
+    font-weight: 800;
+}
+
+.hero-visual {
+    position: relative;
+    min-height: 390px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual-decoration {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.decoration-one {
+    width: 310px;
+    height: 310px;
+    background: #dce6ff;
+}
+
+.decoration-two {
+    width: 240px;
+    height: 240px;
+    background: #c8d7ff;
+    opacity: 0.7;
+}
+
+.reward-preview-card {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 355px);
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.9);
+    border-radius: 23px;
+    background: rgba(255,255,255,0.94);
+    box-shadow: 0 25px 65px rgba(37,59,128,0.15);
+    text-align: center;
+}
+
+.preview-top,
+.preview-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.preview-top {
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.preview-star {
+    color: #e9a32d;
+    font-size: 1.5rem;
+}
+
+.preview-gift {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 115px;
+    height: 115px;
+    margin: 28px auto;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #eaf0ff, #d7e2ff);
+    font-size: 4rem;
+}
+
+.reward-preview-card h3 {
+    color: #253b80;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.reward-preview-card p {
+    color: #64748b;
+    font-size: 0.87rem;
+    line-height: 1.7;
+}
+
+.preview-bottom {
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid #e8edf5;
+    color: #4169e1;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.floating-label {
+    position: absolute;
+    z-index: 3;
+    padding: 13px 17px;
+    border: 1px solid #edf0f7;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 8px 25px rgba(37,59,128,0.1);
+    color: #253b80;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.label-top {
+    top: 35px;
+    right: 0;
+}
+
+.label-bottom {
+    bottom: 30px;
+    left: 0;
+}
+
+/* How it works */
+
+.how-section {
+    padding: 95px 0;
+    background: white;
+}
+
+.section-heading {
+    max-width: 650px;
+    margin: 0 auto 50px;
+}
+
+.section-heading h2 {
+    color: #172b61;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.section-heading p {
+    color: #64748b;
+    line-height: 1.8;
+}
+
+.process-card {
+    position: relative;
+    height: 100%;
+    min-height: 245px;
+    padding: 28px 23px;
+    border: 1px solid #e8edf5;
+    border-radius: 17px;
+    background: #ffffff;
+    transition: all 0.25s ease;
+}
+
+.process-card:hover,
+.benefit-card:hover {
+    transform: translateY(-6px);
+    border-color: #cbd9ff;
+    box-shadow: 0 15px 35px rgba(37,59,128,0.09);
+}
+
+.process-number {
+    color: #a8b9e8;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.process-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    margin: 23px 0 18px;
+    border-radius: 15px;
+    background: #eef2ff;
+    font-size: 1.65rem;
+}
+
+.process-card h4 {
+    color: #253b80;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.process-card p {
+    color: #64748b;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    margin-bottom: 0;
+}
+
+/* Benefits */
+
+.benefits-section {
+    padding: 100px 0;
+    background: #f5f7fc;
+}
+
+.benefits-title {
+    color: #172b61;
+    font-size: 2.65rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+}
+
+.benefits-description {
+    margin: 22px 0;
+    color: #64748b;
+    line-height: 1.9;
+}
+
+.benefits-link {
+    display: inline-block;
+    color: #4169e1;
+    font-weight: 800;
+    margin-top: 8px;
+}
+
+.benefit-card {
+    height: 100%;
+    min-height: 205px;
+    padding: 25px;
+    border: 1px solid #e8edf5;
+    border-radius: 16px;
+    background: white;
+    transition: all 0.25s ease;
+}
+
+.benefit-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    border-radius: 13px;
+    background: #eef2ff;
+    font-size: 1.4rem;
+}
+
+.benefit-card h4 {
+    color: #253b80;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.benefit-card p {
+    color: #64748b;
+    font-size: 0.84rem;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Final call to action */
+
+.rewards-section {
+    padding: 75px 0;
+    background: #ffffff;
+}
+
+.rewards-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 45px;
+    border-radius: 22px;
+    background: linear-gradient(120deg, #253b80, #4169e1);
+}
+
+.rewards-content .section-eyebrow {
+    color: #cbd9ff;
+}
+
+.rewards-content h2 {
+    color: white;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.rewards-content p {
+    max-width: 600px;
+    margin: 12px 0 0;
+    color: #e0e8ff;
+    line-height: 1.8;
+}
+
+.rewards-button {
+    flex-shrink: 0;
+    color: #253b80;
+    background: white;
+}
+
+.rewards-button:hover {
+    color: #172b61;
+    background: #edf2ff;
+    transform: translateY(-2px);
+}
+
+/* Responsive homepage */
+
+@media (max-width: 991px) {
+
+    .landing-hero {
+        padding: 65px 0;
+    }
+
+    .hero-visual {
+        min-height: 360px;
+    }
+
+    .benefits-section {
+        padding: 70px 0;
+    }
+
+    .rewards-content {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .landing-title {
+        font-size: 2.8rem;
+        letter-spacing: -1.8px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .hero-primary-button,
+    .hero-secondary-button {
+        width: 100%;
+    }
+
+    .hero-visual {
+        min-height: 340px;
+    }
+
+    .decoration-one {
+        width: 260px;
+        height: 260px;
+    }
+
+    .decoration-two {
+        width: 200px;
+        height: 200px;
+    }
+
+    .floating-label {
+        font-size: 0.7rem;
+        padding: 10px;
+    }
+
+    .how-section {
+        padding: 65px 0;
+    }
+
+    .section-heading h2,
+    .benefits-title {
+        font-size: 2rem;
+    }
+
+    .rewards-content {
+        padding: 28px 22px;
+    }
+
+    .rewards-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .rewards-button {
+        width: 100%;
+    }
+}
