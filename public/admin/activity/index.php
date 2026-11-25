@@ -240,14 +240,14 @@ function formatActivityStatus(string $status): string
 function activityBadgeClass(string $status): string
 {
     return match ($status) {
-        'Successful', 'generated' => 'bg-success',
+        'Successful', 'generated' => 'success',
         'invalid',
         'already_redeemed',
         'inactive_product',
         'ineligible',
-        'cancelled' => 'bg-danger',
-        'used' => 'bg-primary',
-        default => 'bg-secondary'
+        'cancelled' => 'danger',
+        'used' => 'primary',
+        default => 'secondary'
     };
 }
 
@@ -260,112 +260,507 @@ function activityBadgeClass(string $status): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Activity Monitoring | Admin</title>
+    <title>Activity Monitoring | LoyaltyRewards Admin</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    >
+
     <style>
+        :root {
+            --navy: #10243e;
+            --navy-light: #19395d;
+            --blue: #2878e5;
+            --blue-light: #edf4ff;
+            --page-bg: #f4f7fb;
+            --text-main: #1d2939;
+            --text-muted: #718096;
+            --border: #e7edf4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f5f7fb;
+            background: var(--page-bg);
+            color: var(--text-main);
+            font-family: Inter, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+            min-height: 100vh;
         }
 
-        .summary-card,
-        .page-card {
+        /* Header */
+        .topbar {
             background: #ffffff;
-            border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 22px;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
         }
 
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: var(--navy);
+            color: #ffffff;
+            font-size: 21px;
+        }
+
+        .brand-name {
+            color: var(--navy);
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+            line-height: 1.1;
+        }
+
+        .brand-name span {
+            color: var(--blue);
+        }
+
+        .brand-tagline {
+            display: block;
+            color: #8995a5;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.7px;
+            margin-top: 4px;
+        }
+
+        .dashboard-btn {
+            border: 1px solid #dce5f0;
+            border-radius: 9px;
+            color: var(--navy);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 15px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .dashboard-btn:hover {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: #ffffff;
+        }
+
+        /* Main content */
+        .main-content {
+            padding-top: 34px;
+            padding-bottom: 45px;
+        }
+
+        .breadcrumb-text {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .breadcrumb-text a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .page-title {
+            color: var(--navy);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 7px;
+        }
+
+        .page-description {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        /* Summary cards */
         .summary-card {
             height: 100%;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 21px;
+            box-shadow: 0 3px 12px rgba(16, 36, 62, 0.025);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 36, 62, 0.07);
+        }
+
+        .summary-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .summary-label {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .summary-icon {
+            width: 39px;
+            height: 39px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            font-size: 17px;
+        }
+
+        .icon-green {
+            background: #eaf8f0;
+            color: #159653;
+        }
+
+        .icon-red {
+            background: #fff0ef;
+            color: #dc4c45;
+        }
+
+        .icon-blue {
+            background: #edf4ff;
+            color: #2878e5;
+        }
+
+        .icon-purple {
+            background: #f3efff;
+            color: #7956c9;
         }
 
         .summary-value {
-            font-size: 26px;
-            font-weight: 700;
+            color: var(--navy);
+            font-size: 29px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-top: 15px;
         }
 
-        .table th {
-            background-color: #f8f9fa;
+        /* Content panels */
+        .content-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 3px 12px rgba(16, 36, 62, 0.025);
+        }
+
+        .section-title {
+            color: var(--navy);
+            font-size: 16px;
+            font-weight: 750;
+            margin-bottom: 5px;
+        }
+
+        .section-description {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* Filters */
+        .form-label {
+            color: #34445a;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 43px;
+            border: 1px solid #dce4ed;
+            border-radius: 9px;
+            color: var(--text-main);
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(40, 120, 229, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            border-color: var(--blue);
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 650;
+            padding: 10px 18px;
+        }
+
+        .btn-primary:hover {
+            background: #1766ce;
+            border-color: #1766ce;
+        }
+
+        .btn-outline-secondary {
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 17px;
+        }
+
+        /* Activity table */
+        .activity-table {
+            margin-bottom: 0;
+            min-width: 850px;
+        }
+
+        .activity-table thead th {
+            background: #f5f8fc;
+            border-bottom: 1px solid var(--border);
+            color: #65758a;
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: 0.45px;
+            padding: 14px 13px;
+            text-transform: uppercase;
             white-space: nowrap;
         }
 
-        .table td {
+        .activity-table tbody td {
+            border-bottom: 1px solid #edf1f6;
+            color: #34445a;
+            font-size: 12px;
+            padding: 15px 13px;
             vertical-align: middle;
         }
 
-        .filter-label {
-            font-weight: 600;
+        .activity-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .activity-table tbody tr:hover {
+            background: #f9fbfe;
+        }
+
+        .customer-name {
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .activity-type {
+            color: var(--navy);
+            font-weight: 650;
+        }
+
+        .points-value {
+            color: #159653;
+            font-weight: 750;
+        }
+
+        .status-badge {
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 750;
+            padding: 6px 10px;
+            white-space: nowrap;
+        }
+
+        .status-success {
+            background: #e7f7ee;
+            color: #13864b;
+        }
+
+        .status-danger {
+            background: #fff0ef;
+            color: #c83e38;
+        }
+
+        .status-primary {
+            background: #edf4ff;
+            color: #2468c7;
+        }
+
+        .status-secondary {
+            background: #eef1f5;
+            color: #637083;
+        }
+
+        .empty-state {
+            padding: 45px 15px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            color: #9aabc0;
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .empty-title {
+            color: var(--navy);
+            font-size: 15px;
+            font-weight: 750;
+        }
+
+        .empty-description {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .security-note {
+            background: #f5f8fc;
+            border-radius: 8px;
+            color: #718096;
+            font-size: 11px;
+            padding: 11px 13px;
+        }
+
+        @media (max-width: 767px) {
+            .main-content {
+                padding-top: 25px;
+            }
+
+            .page-title {
+                font-size: 23px;
+            }
+
+            .content-card {
+                padding: 17px;
+            }
+
+            .summary-card {
+                padding: 17px;
+            }
+
+            .summary-value {
+                font-size: 25px;
+            }
+
+            .brand-name {
+                font-size: 19px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<header class="bg-white border-bottom py-3">
+<header class="topbar">
+    <div class="container-fluid px-3 px-lg-4 d-flex justify-content-between align-items-center">
 
-    <div class="container d-flex justify-content-between align-items-center">
+        <a href="../dashboard.php" class="brand">
+            <div class="brand-icon">
+                <i class="bi bi-star-fill"></i>
+            </div>
 
-        <div>
-            <h5 class="mb-0">Customer Loyalty Rewards</h5>
-            <small class="text-muted">Admin / Activity Monitoring</small>
-        </div>
+            <div>
+                <div class="brand-name">
+                    Loyalty<span>Rewards</span>
+                </div>
+                <span class="brand-tagline">EVERY PURCHASE MATTERS</span>
+            </div>
+        </a>
 
-        <a href="../dashboard.php" class="btn btn-outline-secondary btn-sm">
+        <a href="../dashboard.php" class="dashboard-btn">
+            <i class="bi bi-grid me-1"></i>
             Admin Dashboard
         </a>
 
     </div>
-
 </header>
 
-<main class="container py-4">
+<main class="container-fluid px-3 px-lg-4 main-content">
 
+    <!-- Page heading -->
     <div class="mb-4">
-        <h3 class="fw-bold mb-1">Activity Monitoring</h3>
-        <p class="text-muted mb-0">
-            Monitor customer reward activity and failed code attempts.
+        <div class="breadcrumb-text">
+            <a href="../dashboard.php">Admin Dashboard</a>
+            <span class="mx-1">/</span>
+            Activity Monitoring
+        </div>
+
+        <h1 class="page-title">Activity Monitoring</h1>
+
+        <p class="page-description">
+            Monitor customer reward activity, code redemptions and failed code attempts.
         </p>
     </div>
 
-    <!-- Summary Cards -->
-
+    <!-- Summary cards -->
     <div class="row g-3 mb-4">
 
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="summary-card">
-                <small class="text-muted">Successful Code Redemptions</small>
+                <div class="summary-top">
+                    <span class="summary-label">Successful Code Redemptions</span>
+                    <div class="summary-icon icon-green">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                </div>
+
                 <div class="summary-value text-success">
                     <?= number_format($successfulCodeCount) ?>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="summary-card">
-                <small class="text-muted">Failed Code Attempts</small>
+                <div class="summary-top">
+                    <span class="summary-label">Failed Code Attempts</span>
+                    <div class="summary-icon icon-red">
+                        <i class="bi bi-shield-exclamation"></i>
+                    </div>
+                </div>
+
                 <div class="summary-value text-danger">
                     <?= number_format($failedAttemptCount) ?>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="summary-card">
-                <small class="text-muted">Reward Redemptions</small>
-                <div class="summary-value text-primary">
+                <div class="summary-top">
+                    <span class="summary-label">Reward Redemptions</span>
+                    <div class="summary-icon icon-blue">
+                        <i class="bi bi-gift"></i>
+                    </div>
+                </div>
+
+                <div class="summary-value" style="color: var(--blue);">
                     <?= number_format($rewardRedemptionCount) ?>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="summary-card">
-                <small class="text-muted">Total Points Issued</small>
+                <div class="summary-top">
+                    <span class="summary-label">Total Points Issued</span>
+                    <div class="summary-icon icon-purple">
+                        <i class="bi bi-coin"></i>
+                    </div>
+                </div>
+
                 <div class="summary-value">
                     <?= number_format($totalPointsIssued) ?>
                 </div>
@@ -375,13 +770,19 @@ function activityBadgeClass(string $status): string
     </div>
 
     <!-- Filters -->
+    <section class="content-card mb-4">
 
-    <div class="page-card mb-4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-funnel text-primary"></i>
+            <h2 class="section-title mb-0">Filter Activities</h2>
+        </div>
 
-        <h5 class="fw-bold mb-3">Filter Activities</h5>
+        <p class="section-description">
+            Narrow down activity records using type, status, customer or date.
+        </p>
 
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-warning">
+            <div class="alert alert-warning py-2 small">
                 <ul class="mb-0">
                     <?php foreach ($errors as $error): ?>
                         <li><?= e($error) ?></li>
@@ -394,8 +795,8 @@ function activityBadgeClass(string $status): string
 
             <div class="row g-3">
 
-                <div class="col-md-4">
-                    <label class="form-label filter-label" for="activity_type">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label" for="activity_type">
                         Activity Type
                     </label>
 
@@ -418,13 +819,12 @@ function activityBadgeClass(string $status): string
                     </select>
                 </div>
 
-                <div class="col-md-4">
-                    <label class="form-label filter-label" for="status">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label" for="status">
                         Status
                     </label>
 
                     <select name="status" id="status" class="form-select">
-
                         <option value="">All Statuses</option>
 
                         <?php foreach ($allowedStatuses as $option): ?>
@@ -439,8 +839,8 @@ function activityBadgeClass(string $status): string
                     </select>
                 </div>
 
-                <div class="col-md-4">
-                    <label class="form-label filter-label" for="customer">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label" for="customer">
                         Search Customer
                     </label>
 
@@ -455,8 +855,8 @@ function activityBadgeClass(string $status): string
                     >
                 </div>
 
-                <div class="col-md-6">
-                    <label class="form-label filter-label" for="date_from">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label" for="date_from">
                         Start Date
                     </label>
 
@@ -469,8 +869,8 @@ function activityBadgeClass(string $status): string
                     >
                 </div>
 
-                <div class="col-md-6">
-                    <label class="form-label filter-label" for="date_to">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label" for="date_to">
                         End Date
                     </label>
 
@@ -485,13 +885,15 @@ function activityBadgeClass(string $status): string
 
             </div>
 
-            <div class="d-flex gap-2 mt-3">
+            <div class="d-flex flex-wrap gap-2 mt-4">
 
                 <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search me-1"></i>
                     Apply Filters
                 </button>
 
                 <a href="index.php" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>
                     Clear Filters
                 </a>
 
@@ -499,32 +901,50 @@ function activityBadgeClass(string $status): string
 
         </form>
 
-    </div>
+    </section>
 
-    <!-- Activity Table -->
+    <!-- Activity records -->
+    <section class="content-card">
 
-    <div class="page-card">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
 
-        <div class="mb-3">
-            <h5 class="fw-bold mb-1">Activity Records</h5>
+            <div>
+                <h2 class="section-title">
+                    <i class="bi bi-clock-history me-1 text-primary"></i>
+                    Activity Records
+                </h2>
 
-            <p class="text-muted mb-0">
-                Matching records: <strong><?= count($activities) ?></strong>
-                (maximum 100 displayed)
-            </p>
+                <p class="section-description mb-0">
+                    Recent customer and reward activities recorded by the system.
+                </p>
+            </div>
+
+            <div class="small text-muted">
+                <strong class="text-dark"><?= count($activities) ?></strong>
+                matching records
+            </div>
+
         </div>
 
         <?php if (empty($activities)): ?>
 
-            <div class="alert alert-info mb-0">
-                No activities match the selected filters.
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="bi bi-inbox"></i>
+                </div>
+
+                <div class="empty-title">No activities found</div>
+
+                <p class="empty-description mb-0">
+                    No activities match the selected filters. Try changing or clearing your filters.
+                </p>
             </div>
 
         <?php else: ?>
 
             <div class="table-responsive">
 
-                <table class="table table-bordered table-hover mb-0">
+                <table class="table activity-table align-middle">
 
                     <thead>
                         <tr>
@@ -533,7 +953,7 @@ function activityBadgeClass(string $status): string
                             <th>Details</th>
                             <th>Points</th>
                             <th>Status</th>
-                            <th>Date & Time</th>
+                            <th>Date &amp; Time</th>
                         </tr>
                     </thead>
 
@@ -544,11 +964,15 @@ function activityBadgeClass(string $status): string
                             <tr>
 
                                 <td>
-                                    <strong><?= e($activity['activity_type']) ?></strong>
+                                    <span class="activity-type">
+                                        <?= e($activity['activity_type']) ?>
+                                    </span>
                                 </td>
 
                                 <td>
-                                    <?= e($activity['customer_name']) ?>
+                                    <span class="customer-name">
+                                        <?= e($activity['customer_name']) ?>
+                                    </span>
                                 </td>
 
                                 <td>
@@ -557,21 +981,23 @@ function activityBadgeClass(string $status): string
 
                                 <td>
                                     <?php if ((int) $activity['points'] > 0): ?>
-                                        <?= number_format((int) $activity['points']) ?>
+                                        <span class="points-value">
+                                            +<?= number_format((int) $activity['points']) ?>
+                                        </span>
                                     <?php else: ?>
-                                        -
+                                        <span class="text-muted">-</span>
                                     <?php endif; ?>
                                 </td>
 
                                 <td>
                                     <?php $currentStatus = (string) $activity['activity_status']; ?>
 
-                                    <span class="badge <?= e(activityBadgeClass($currentStatus)) ?>">
+                                    <span class="status-badge status-<?= e(activityBadgeClass($currentStatus)) ?>">
                                         <?= e(formatActivityStatus($currentStatus)) ?>
                                     </span>
                                 </td>
 
-                                <td>
+                                <td class="text-nowrap">
                                     <?= e(date(
                                         'd M Y, h:i A',
                                         strtotime($activity['activity_date'])
@@ -590,11 +1016,13 @@ function activityBadgeClass(string $status): string
 
         <?php endif; ?>
 
-        <p class="text-muted small mt-3 mb-0">
+        <div class="security-note mt-3">
+            <i class="bi bi-shield-lock me-1"></i>
             Submitted code hashes and original reward codes are not displayed.
-        </p>
+            Maximum 100 activity records are displayed.
+        </div>
 
-    </div>
+    </section>
 
 </main>
 
