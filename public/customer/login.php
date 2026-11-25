@@ -76,9 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_role'] = $user['role'];
 
                 // Redirect after successful login
-                redirect(
-                    '/customer-loyalty-rewards/public/customer/dashboard.php'
-                );
+                redirect(url('customer/dashboard.php'));
 
             } else {
 
@@ -271,7 +269,7 @@ require_once __DIR__ . '/../../app/includes/header.php';
 
                     Don't have an account?
 
-                    <a href="register.php">
+                    <a href="<?= e(url('customer/register.php')) ?>">
                         Create account
                     </a>
 

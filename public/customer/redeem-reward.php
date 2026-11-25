@@ -133,6 +133,12 @@ if (
 
         $requiredPoints = (int) $lockedReward['required_points'];
 
+if ($requiredPoints <= 0) {
+    throw new RuntimeException(
+        'This reward has an invalid points configuration.'
+    );
+}
+
         // Check sufficient points
         if ($availablePoints < $requiredPoints) {
             throw new RuntimeException(
@@ -207,18 +213,26 @@ if (
             . $rewardId
         );
 
-    } catch (Throwable $exception) {
+    } } catch (RuntimeException $exception) {
 
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
-        }
-
-        error_log(
-            'Reward redemption error: ' . $exception->getMessage()
-        );
-
-        $errorMessage = $exception->getMessage();
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
     }
+
+    $errorMessage = $exception->getMessage();
+
+} catch (Throwable $exception) {
+
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    error_log(
+        'Reward redemption error: ' . $exception->getMessage()
+    );
+
+    $errorMessage = 'Something went wrong while redeeming your reward. Please try again.';
+}
 
 } elseif (
     $_SERVER['REQUEST_METHOD'] === 'POST'

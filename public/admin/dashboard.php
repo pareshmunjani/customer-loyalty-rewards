@@ -85,82 +85,321 @@ $adminName = $_SESSION['user_name'] ?? 'Administrator';
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=20261124">
 
     <style>
-        body {
-            background-color: #f5f7fb;
+        /* Admin dashboard */
+
+        .admin-navbar {
+            min-height: 82px;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid #e8edf5;
+            box-shadow: 0 4px 20px rgba(30, 41, 59, 0.04);
         }
 
-        .dashboard-header {
-            background: #ffffff;
-            border-bottom: 1px solid #e9ecef;
+        .admin-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #253b80;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+            text-decoration: none;
         }
 
-        .stat-card {
-            background: #ffffff;
-            border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 22px;
+        .admin-brand:hover {
+            color: #253b80;
+        }
+
+        .admin-brand-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 43px;
+            height: 43px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #253b80, #4169e1);
+            color: #ffffff;
+            font-size: 1.4rem;
+            box-shadow: 0 5px 12px rgba(37, 59, 128, 0.2);
+        }
+
+        .admin-brand small {
+            display: block;
+            margin-top: 5px;
+            color: #94a3b8;
+            font-size: 0.59rem;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+        }
+
+        .admin-welcome {
+            color: #64748b;
+            font-size: 0.88rem;
+        }
+
+        .admin-welcome strong {
+            color: #253b80;
+        }
+
+        .admin-logout {
+            border-radius: 9px;
+            font-weight: 600;
+            padding: 8px 16px;
+        }
+
+        .admin-main {
+            padding-top: 42px;
+            padding-bottom: 55px;
+        }
+
+        .admin-page-title {
+            color: #172b61;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .admin-page-description {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .admin-section-title {
+            color: #253b80;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            margin-bottom: 18px;
+        }
+
+        /* Statistics cards */
+
+        .admin-stat-card {
+            position: relative;
+            overflow: hidden;
             height: 100%;
+            padding: 23px;
+            background: #ffffff;
+            border: 1px solid #e8edf5;
+            border-radius: 17px;
+            box-shadow: 0 8px 25px rgba(37, 59, 128, 0.045);
+            transition: all 0.22s ease;
+        }
+
+        .admin-stat-card:hover {
+            transform: translateY(-4px);
+            border-color: #d2ddfa;
+            box-shadow: 0 14px 32px rgba(37, 59, 128, 0.09);
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .stat-label {
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 8px;
+            color: #64748b;
+            font-size: 0.84rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .stat-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            border-radius: 13px;
+            background: #eef2ff;
+            color: #4169e1;
+            font-size: 1.25rem;
+            font-weight: 800;
         }
 
         .stat-value {
-            font-size: 28px;
-            font-weight: 700;
+            color: #172b61;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
             margin: 0;
-            color: #212529;
         }
 
-        .module-card {
-            background: #ffffff;
-            border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 22px;
+        .stat-blue .stat-icon {
+            background: #eef2ff;
+            color: #4169e1;
+        }
+
+        .stat-green .stat-icon {
+            background: #e9f8f1;
+            color: #15966b;
+        }
+
+        .stat-red .stat-icon {
+            background: #fff0f1;
+            color: #dc3545;
+        }
+
+        .stat-green .stat-value {
+            color: #15966b;
+        }
+
+        .stat-red .stat-value {
+            color: #dc3545;
+        }
+
+        /* Management cards */
+
+        .admin-module-card {
             height: 100%;
             display: flex;
             flex-direction: column;
+            padding: 25px;
+            background: #ffffff;
+            border: 1px solid #e8edf5;
+            border-radius: 17px;
+            box-shadow: 0 8px 25px rgba(37, 59, 128, 0.045);
+            transition: all 0.22s ease;
         }
 
-        .module-card h5 {
-            font-size: 17px;
-            margin-bottom: 8px;
+        .admin-module-card:hover {
+            transform: translateY(-5px);
+            border-color: #cbd9ff;
+            box-shadow: 0 15px 35px rgba(37, 59, 128, 0.09);
         }
 
-        .module-card p {
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 18px;
+        .module-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 49px;
+            height: 49px;
+            margin-bottom: 19px;
+            border-radius: 14px;
+            background: #eef2ff;
+            color: #253b80;
+            font-size: 1.4rem;
+        }
+
+        .admin-module-card h5 {
+            color: #253b80;
+            font-size: 1.02rem;
+            font-weight: 800;
+            margin-bottom: 9px;
+        }
+
+        .admin-module-card p {
             flex-grow: 1;
+            color: #64748b;
+            font-size: 0.86rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
         }
 
-        .module-card .btn {
+        .module-button {
             align-self: flex-start;
+            border-radius: 9px;
+            padding: 9px 16px;
+            font-size: 0.84rem;
+            font-weight: 700;
+        }
+
+        .admin-back-link {
+            color: #4169e1;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .admin-back-link:hover {
+            color: #253b80;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 767px) {
+
+            .admin-navbar {
+                padding-top: 13px;
+                padding-bottom: 13px;
+            }
+
+            .admin-brand {
+                font-size: 1.05rem;
+            }
+
+            .admin-brand-icon {
+                width: 39px;
+                height: 39px;
+            }
+
+            .admin-welcome {
+                font-size: 0.76rem;
+            }
+
+            .admin-main {
+                padding-top: 30px;
+            }
+
+            .admin-page-title {
+                font-size: 1.65rem;
+            }
+
+            .admin-stat-card {
+                padding: 19px;
+            }
+
+            .admin-module-card {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .admin-navbar .container {
+                align-items: flex-start !important;
+                gap: 12px;
+            }
+
+            .admin-navbar-right {
+                align-items: flex-end !important;
+                flex-direction: column;
+                gap: 8px !important;
+            }
+
+            .admin-welcome {
+                text-align: right;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<header class="dashboard-header py-3">
-
+<header class="admin-navbar">
     <div class="container d-flex justify-content-between align-items-center">
 
-        <div>
-            <h5 class="mb-0">Customer Loyalty Rewards</h5>
-            <small class="text-muted">Administration Panel</small>
-        </div>
+        <a href="../index.php" class="admin-brand">
 
-        <div class="d-flex align-items-center gap-3">
+            <span class="admin-brand-icon">★</span>
 
-            <div class="text-end">
-                <span class="text-muted small">Welcome,</span>
+            <span>
+                Loyalty<span style="color: #4169e1;">Rewards</span>
+                <small>ADMINISTRATION PANEL</small>
+            </span>
+
+        </a>
+
+        <div class="admin-navbar-right d-flex align-items-center gap-3">
+
+            <div class="admin-welcome">
+                Welcome,
                 <strong><?= e($adminName) ?></strong>
             </div>
 
@@ -172,7 +411,10 @@ $adminName = $_SESSION['user_name'] ?? 'Administrator';
                     value="<?= e(generateCsrfToken()) ?>"
                 >
 
-                <button type="submit" class="btn btn-outline-danger btn-sm">
+                <button
+                    type="submit"
+                    class="btn btn-outline-danger btn-sm admin-logout"
+                >
                     Logout
                 </button>
 
@@ -181,217 +423,349 @@ $adminName = $_SESSION['user_name'] ?? 'Administrator';
         </div>
 
     </div>
-
 </header>
 
-<main class="container py-4">
+<main class="container admin-main">
 
-    <div class="mb-4">
-        <h3 class="fw-bold">Admin Dashboard</h3>
+    <!-- Page heading -->
 
-        <p class="text-muted mb-0">
-            Overview of your customer loyalty rewards system.
+    <div class="mb-5">
+
+        <div class="mb-2">
+            <span class="badge rounded-pill px-3 py-2"
+                  style="background: #eaf0ff; color: #4169e1;">
+                ADMINISTRATION
+            </span>
+        </div>
+
+        <h1 class="admin-page-title mb-2">
+            Admin Dashboard
+        </h1>
+
+        <p class="admin-page-description mb-0">
+            Manage your loyalty program and monitor system performance.
         </p>
+
     </div>
 
     <?php if ($errorMessage !== ''): ?>
+
         <div class="alert alert-danger">
             <?= e($errorMessage) ?>
         </div>
+
     <?php endif; ?>
+
 
     <!-- System Overview -->
 
-    <h5 class="mb-3">System Overview</h5>
+    <section class="mb-5">
 
-    <div class="row g-3 mb-4">
+        <h2 class="admin-section-title">
+            System Overview
+        </h2>
 
-        <div class="col-md-6 col-lg-3">
-            <div class="stat-card">
-                <p class="stat-label">Registered Customers</p>
-                <p class="stat-value">
-                    <?= number_format($stats['customers']) ?>
-                </p>
+        <div class="row g-3">
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="admin-stat-card stat-blue">
+
+                    <div class="stat-top">
+                        <p class="stat-label">Registered Customers</p>
+                        <span class="stat-icon">♙</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['customers']) ?>
+                    </p>
+
+                </div>
             </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="admin-stat-card stat-blue">
+
+                    <div class="stat-top">
+                        <p class="stat-label">Active Products</p>
+                        <span class="stat-icon">▣</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['active_products']) ?>
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="admin-stat-card stat-blue">
+
+                    <div class="stat-top">
+                        <p class="stat-label">Active Rewards</p>
+                        <span class="stat-icon">★</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['active_rewards']) ?>
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="admin-stat-card stat-blue">
+
+                    <div class="stat-top">
+                        <p class="stat-label">Total Reward Codes</p>
+                        <span class="stat-icon">⌑</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['total_codes']) ?>
+                    </p>
+
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-md-6 col-lg-3">
-            <div class="stat-card">
-                <p class="stat-label">Active Products</p>
-                <p class="stat-value">
-                    <?= number_format($stats['active_products']) ?>
-                </p>
-            </div>
-        </div>
+    </section>
 
-        <div class="col-md-6 col-lg-3">
-            <div class="stat-card">
-                <p class="stat-label">Active Rewards</p>
-                <p class="stat-value">
-                    <?= number_format($stats['active_rewards']) ?>
-                </p>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-3">
-            <div class="stat-card">
-                <p class="stat-label">Total Reward Codes</p>
-                <p class="stat-value">
-                    <?= number_format($stats['total_codes']) ?>
-                </p>
-            </div>
-        </div>
-
-    </div>
 
     <!-- Reward Code Statistics -->
 
-    <h5 class="mb-3">Reward Code Statistics</h5>
+    <section class="mb-5">
 
-    <div class="row g-3 mb-4">
+        <h2 class="admin-section-title">
+            Reward Code Statistics
+        </h2>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="stat-card">
-                <p class="stat-label">Generated Codes</p>
-                <p class="stat-value">
-                    <?= number_format($stats['total_codes']) ?>
-                </p>
+        <div class="row g-3">
+
+            <div class="col-12 col-md-4">
+                <div class="admin-stat-card stat-blue">
+
+                    <div class="stat-top">
+                        <p class="stat-label">Generated Codes</p>
+                        <span class="stat-icon">▤</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['total_codes']) ?>
+                    </p>
+
+                </div>
             </div>
+
+            <div class="col-12 col-md-4">
+                <div class="admin-stat-card stat-green">
+
+                    <div class="stat-top">
+                        <p class="stat-label">Redeemed Codes</p>
+                        <span class="stat-icon">✓</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['redeemed_codes']) ?>
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="admin-stat-card stat-blue">
+
+                    <div class="stat-top">
+                        <p class="stat-label">Unused Codes</p>
+                        <span class="stat-icon">◷</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['unused_codes']) ?>
+                    </p>
+
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="stat-card">
-                <p class="stat-label">Redeemed Codes</p>
-                <p class="stat-value text-success">
-                    <?= number_format($stats['redeemed_codes']) ?>
-                </p>
-            </div>
-        </div>
+    </section>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="stat-card">
-                <p class="stat-label">Unused Codes</p>
-                <p class="stat-value text-primary">
-                    <?= number_format($stats['unused_codes']) ?>
-                </p>
-            </div>
-        </div>
-
-    </div>
 
     <!-- Points Overview -->
 
-    <h5 class="mb-3">Points Overview</h5>
+    <section class="mb-5">
 
-    <div class="row g-3 mb-5">
+        <h2 class="admin-section-title">
+            Points Overview
+        </h2>
 
-        <div class="col-md-6">
-            <div class="stat-card">
-                <p class="stat-label">Total Points Issued to Customers</p>
-                <p class="stat-value text-success">
-                    <?= number_format($stats['points_issued']) ?>
-                </p>
+        <div class="row g-3">
+
+            <div class="col-12 col-md-6">
+                <div class="admin-stat-card stat-green">
+
+                    <div class="stat-top">
+                        <p class="stat-label">
+                            Total Points Issued to Customers
+                        </p>
+                        <span class="stat-icon">↗</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['points_issued']) ?>
+                    </p>
+
+                </div>
             </div>
+
+            <div class="col-12 col-md-6">
+                <div class="admin-stat-card stat-red">
+
+                    <div class="stat-top">
+                        <p class="stat-label">
+                            Total Points Redeemed by Customers
+                        </p>
+                        <span class="stat-icon">↘</span>
+                    </div>
+
+                    <p class="stat-value">
+                        <?= number_format($stats['points_redeemed']) ?>
+                    </p>
+
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-md-6">
-            <div class="stat-card">
-                <p class="stat-label">Total Points Redeemed by Customers</p>
-                <p class="stat-value text-danger">
-                    <?= number_format($stats['points_redeemed']) ?>
-                </p>
-            </div>
-        </div>
+    </section>
 
-    </div>
 
     <!-- Management Modules -->
 
-    <h5 class="mb-3">Management Modules</h5>
+    <section>
 
-    <div class="row g-3">
+        <h2 class="admin-section-title">
+            Management Modules
+        </h2>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="module-card">
-                <h5>Product Management</h5>
+        <div class="row g-3">
 
-                <p>
-                    Add, edit, view and manage factory products and
-                    their points per box.
-                </p>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="admin-module-card">
 
-                <a href="products/index.php" class="btn btn-primary btn-sm">
-                    Manage Products
-                </a>
+                    <div class="module-icon">▣</div>
+
+                    <h5>Product Management</h5>
+
+                    <p>
+                        Add, edit, view and manage factory products and
+                        their points per box.
+                    </p>
+
+                    <a href="products/index.php"
+                       class="btn btn-primary module-button">
+                        Manage Products →
+                    </a>
+
+                </div>
             </div>
+
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="admin-module-card">
+
+                    <div class="module-icon">★</div>
+
+                    <h5>Reward Management</h5>
+
+                    <p>
+                        Create and manage rewards that customers can
+                        redeem using their loyalty points.
+                    </p>
+
+                    <a href="rewards/index.php"
+                       class="btn btn-primary module-button">
+                        Manage Rewards →
+                    </a>
+
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="admin-module-card">
+
+                    <div class="module-icon">⌑</div>
+
+                    <h5>Reward Code Generation</h5>
+
+                    <p>
+                        Generate unique reward codes in bulk for
+                        physical product packaging.
+                    </p>
+
+                    <a href="codes/index.php"
+                       class="btn btn-primary module-button">
+                        Generate Codes →
+                    </a>
+
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="admin-module-card">
+
+                    <div class="module-icon">♙</div>
+
+                    <h5>Customer Management</h5>
+
+                    <p>
+                        Search registered customers and view their
+                        profiles, points and redemption history.
+                    </p>
+
+                    <a href="customers/index.php"
+                       class="btn btn-primary module-button">
+                        Manage Customers →
+                    </a>
+
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="admin-module-card">
+
+                    <div class="module-icon">◷</div>
+
+                    <h5>Activity Monitoring</h5>
+
+                    <p>
+                        Monitor successful code redemptions, failed
+                        attempts and customer reward activity.
+                    </p>
+
+                    <a href="activity/index.php"
+                       class="btn btn-primary module-button">
+                        Monitor Activities →
+                    </a>
+
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="module-card">
-                <h5>Reward Management</h5>
+    </section>
 
-                <p>
-                    Create and manage rewards that customers can
-                    redeem using their loyalty points.
-                </p>
 
-                <a href="rewards/index.php" class="btn btn-primary btn-sm">
-                    Manage Rewards
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="module-card">
-                <h5>Reward Code Generation</h5>
-
-                <p>
-                    Generate unique reward codes in bulk for
-                    physical product packaging.
-                </p>
-
-                <a href="codes/index.php" class="btn btn-primary btn-sm">
-                    Generate Codes
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="module-card">
-                <h5>Customer Management</h5>
-
-                <p>
-                    Search registered customers and view their
-                    profiles, points and redemption history.
-                </p>
-
-                <a href="customers/index.php" class="btn btn-primary btn-sm">
-                    Manage Customers
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="module-card">
-                <h5>Activity Monitoring</h5>
-
-                <p>
-                    Monitor successful code redemptions, failed
-                    attempts and customer reward activity.
-                </p>
-
-                <a href="activity/index.php" class="btn btn-primary btn-sm">
-                    Monitor Activities
-                </a>
-            </div>
-        </div>
-
-    </div>
+    <!-- Back to website -->
 
     <div class="text-center mt-5">
 
-        <a href="../index.php" class="btn btn-outline-secondary">
-            Back to Main Website
+        <a href="../index.php" class="admin-back-link">
+            ← Back to Main Website
         </a>
 
     </div>

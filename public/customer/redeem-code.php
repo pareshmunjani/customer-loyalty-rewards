@@ -153,6 +153,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // 9. Add earned points to the points ledger
                     $points = (int) $code['points_value'];
 
+if ($points <= 0) {
+    throw new RuntimeException(
+        'Invalid reward code points configuration.'
+    );
+}
+
                     $transactionStmt = $pdo->prepare("
                         INSERT INTO point_transactions (
                             user_id,

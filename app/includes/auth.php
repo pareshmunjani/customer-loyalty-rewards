@@ -1,7 +1,6 @@
 
 <?php
 
-
 require_once __DIR__ . '/functions.php';
 
 /**
@@ -16,9 +15,17 @@ function requireLogin(): void
             'Please log in to access your account.'
         );
 
-        redirect(
-            '/customer-loyalty-rewards/public/customer/login.php'
+        // Redirect based on the requested section.
+        $isAdminPage = str_contains(
+            $_SERVER['SCRIPT_NAME'] ?? '',
+            '/admin/'
         );
+
+        if ($isAdminPage) {
+            redirect(url('admin/login.php'));
+        }
+
+        redirect(url('customer/login.php'));
     }
 }
 
